@@ -19,9 +19,9 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
-		<junit.jupiter.version>5.0.0-M5</junit.jupiter.version>
-		<junit.platform.version>1.0.0-M5</junit.platform.version>
-		<junit.vintage.version>4.12.0-M5</junit.vintage.version>
+		<junit.jupiter.version>5.0.0-M6</junit.jupiter.version>
+		<junit.platform.version>1.0.0-M6</junit.platform.version>
+		<junit.vintage.version>4.12.0-M6</junit.vintage.version>
 
 		<log4j2.bom.version>2.8.2</log4j2.bom.version>
 
