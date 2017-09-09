@@ -108,15 +108,7 @@
 			<version>[${junit.jupiter.version},]</version>
 			<scope>test</scope>
 		</dependency>
-<!-- 
-        I am disabling vintage junit since i want to play with 5.x versions
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<version>${junit.vintage.version}</version>
-			<scope>test</scope>
-		</dependency>
- -->
+
 	</dependencies>
 
 	<dependencyManagement>
