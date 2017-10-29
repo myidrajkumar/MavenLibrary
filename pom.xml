@@ -21,7 +21,8 @@
 
         <log4j2.bom.version>2.9.1</log4j2.bom.version>
 
-        <surefire.version>2.20.1</surefire.version>
+        <surefire.version>2.19.1</surefire.version>
+        <java.version>1.9</java.version>
     </properties>
 
     <dependencies>
@@ -124,13 +125,12 @@
     </dependencyManagement>
 
     <build>
-    
+
         <defaultGoal>install</defaultGoal>
-        
+
         <plugins>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>${surefire.version}</version>
                 <configuration>
                     <parallel>classesAndMethods</parallel>
                     <useUnlimitedThreads>true</useUnlimitedThreads>
@@ -141,11 +141,6 @@
                         <artifactId>junit-platform-surefire-provider</artifactId>
                         <version>${junit.platform.version}</version>
                     </dependency>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>${junit.jupiter.version}</version>
-                    </dependency>
                 </dependencies>
             </plugin>
 
@@ -154,16 +149,60 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
                 <configuration>
-                    <fork>true</fork>
                     <verbose>true</verbose>
                     <showWarnings>true</showWarnings>
-                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                    <release>9</release>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <showDeprecation>true</showDeprecation>
+                    <compilerVersion>${java.version}</compilerVersion>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>benchmarks</finalName>
+                            <transformers>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.openjdk.jmh.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire.version}</version>
+                    <!-- Due to issues in 2.20 version, use this only as of now -->
+
+                    <configuration>
+                        <parallel>classesAndMethods</parallel>
+                        <useUnlimitedThreads>true</useUnlimitedThreads>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.junit.platform</groupId>
+                            <artifactId>junit-platform-surefire-provider</artifactId>
+                            <version>${junit.platform.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
     </build>
 </project>
